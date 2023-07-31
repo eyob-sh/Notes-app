@@ -83,3 +83,16 @@ body {
   border-radius: 10px;
   cursor: pointer;
 }
+
+.displayedNote {
+  margin-top: 10px;
+}
+
+.noteTitle {
+  font-size: 30px;
+  font-weight: 10px;
+}
+
+.noteContent {
+  margin-top: 5px;
+}
