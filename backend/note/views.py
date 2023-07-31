@@ -28,11 +28,11 @@ def delete(request, pk):
     return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-@api_view(["UPDATE"])
+@api_view(["PUT"])
 def update(request,pk):
-    note = request.data.get(id = pk)
+    note = Note.objects.get(id = pk)
     serializer = NoteSerializer(note, data=request.data, partial = True)
-    if serializer.is_valid:
+    if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
     else: return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
