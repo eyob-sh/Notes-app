@@ -5,5 +5,6 @@ urlpatterns = [
     path('get/', views.get, name="get"),
     path('delete/<str:pk>/', views.delete, name="delete"),
     path('update/<str:pk>/', views.update, name="update"),
+    path('get/<str:pk>/', views.getById, name="getById")
     
 ]

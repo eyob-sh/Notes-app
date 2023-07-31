@@ -11,10 +11,21 @@ import { Link } from "react-router-dom";
 function FrontPage() {
   const [visible, setVisible] = React.useState(false);
   const [notes, setNotes] = React.useState([]);
-  const [state, setState] = React.useState(true);
+
+  const [upd, setUpd] = React.useState(false);
 
   function handleClick() {
     setVisible((prev) => !prev);
+  }
+
+  function update(id) {
+    setUpd(true);
+    fetch(`http://127.0.0.1:8000/note/update/${id}/`, {
+      method: "PUT",
+      headers: {
+        "content-Type": "application/json",
+      },
+    });
   }
 
   function del(id) {
@@ -24,9 +35,9 @@ function FrontPage() {
         "content-Type": "application/json",
       },
     });
+    console.log(id);
     window.location.reload();
   }
-  console.log(state);
 
   React.useEffect(() => {
     fetch("http://127.0.0.1:8000/note/get/")
@@ -42,6 +53,7 @@ function FrontPage() {
         note={item.content}
         key={item.id}
         del={() => del(item.id)}
+        update={() => update(item.id)}
       />
     );
   });

@@ -36,3 +36,9 @@ def update(request,pk):
         serializer.save()
         return Response(serializer.data)
     else: return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(["GET"])
+def getById(request, pk):
+    note = Note.objects.get(id = pk)
+    serializer = NoteSerializer(note, many = False)
+    return Response(serializer.data)
