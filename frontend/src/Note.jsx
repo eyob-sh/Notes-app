@@ -1,7 +1,7 @@
 import React from "react";
 import "./notebox.css";
 
-export default function Note() {
+function Note() {
   return (
     <div className="note">
       <div className="top">
@@ -11,3 +11,5 @@ export default function Note() {
     </div>
   );
 }
+
+export default Note;
