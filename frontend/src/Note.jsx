@@ -5,8 +5,10 @@ function Note(props) {
   return (
     <div className="note">
       <div className="top">
-        <span style={{ color: "blue" }}>update</span>
-        <span style={{ color: "red" }}>delete</span>
+        <span style={{ color: "blue", cursor: "pointer" }}>update</span>
+        <span style={{ color: "red", cursor: "pointer" }} onClick={props.del}>
+          delete
+        </span>
       </div>
       <div className="displayedNote">
         <h4 className="noteTitle">{props.title}</h4>

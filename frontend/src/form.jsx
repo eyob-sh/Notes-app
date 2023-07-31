@@ -1,9 +1,20 @@
 import React from "react";
 import "./frontpage.css";
+import { json } from "react-router-dom";
 
 function Form(props) {
-  // const [visibility, setVisibility] = React.useState(props.visible);
-  // console.log(props.visible);
+  const [title, setTitle] = React.useState("");
+  const [content, setContent] = React.useState("");
+
+  function submit() {
+    fetch("http://127.0.0.1:8000/note/add/", {
+      method: "POST",
+      headers: {
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify({ title: title, content: content }),
+    });
+  }
 
   return (
     <div className={props.visible ? "formPage" : "formPageNone"}>
@@ -15,15 +26,29 @@ function Form(props) {
         <form className="form">
           <div className="noteTitle">
             <h3>Title</h3>
-            <input type="text" name="title" id="title" />
+            <input
+              type="text"
+              name="title"
+              id="title"
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </div>
           <div className="textarea">
             <h3>Note</h3>
 
-            <textarea name="Note" id="note"></textarea>
+            <textarea
+              name="Note"
+              id="note"
+              onChange={(e) => setContent(e.target.value)}
+            ></textarea>
           </div>
           <div>
-            <input type="submit" className="submitButton" />
+            <input
+              type="submit"
+              className="submitButton"
+              value="submit"
+              onClick={submit}
+            />
           </div>
         </form>
       </div>

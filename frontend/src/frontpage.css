@@ -26,6 +26,9 @@ body {
 
 .main {
   padding: 40px;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
 }
 
 .form {

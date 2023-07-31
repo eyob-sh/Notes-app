@@ -11,10 +11,23 @@ import { Link } from "react-router-dom";
 function FrontPage() {
   const [visible, setVisible] = React.useState(false);
   const [notes, setNotes] = React.useState([]);
+  const [state, setState] = React.useState(true);
 
   function handleClick() {
     setVisible((prev) => !prev);
   }
+
+  function del(id) {
+    fetch(`http://127.0.0.1:8000/note/delete/${id}/`, {
+      method: "DELETE",
+      headers: {
+        "content-Type": "application/json",
+      },
+    });
+    window.location.reload();
+  }
+  console.log(state);
+
   React.useEffect(() => {
     fetch("http://127.0.0.1:8000/note/get/")
       .then((res) => res.json())
@@ -23,7 +36,14 @@ function FrontPage() {
 
   console.log(notes);
   const displayNote = notes.map(function (item) {
-    return <Note title={item.title} note={item.content} />;
+    return (
+      <Note
+        title={item.title}
+        note={item.content}
+        key={item.id}
+        del={() => del(item.id)}
+      />
+    );
   });
   console.log(displayNote);
   return (
