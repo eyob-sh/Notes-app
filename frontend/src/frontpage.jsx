@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, json } from "react-router-dom";
 import React from "react";
 import Note from "./Note.jsx";
 import Form from "./form.jsx";
@@ -11,21 +11,25 @@ import { Link } from "react-router-dom";
 function FrontPage() {
   const [visible, setVisible] = React.useState(false);
   const [notes, setNotes] = React.useState([]);
-
+  const [form, setForm] = React.useState({});
   const [upd, setUpd] = React.useState(false);
+
+  const [id, setId] = React.useState("");
 
   function handleClick() {
     setVisible((prev) => !prev);
   }
 
   function update(id) {
-    setUpd(true);
-    fetch(`http://127.0.0.1:8000/note/update/${id}/`, {
-      method: "PUT",
-      headers: {
-        "content-Type": "application/json",
-      },
-    });
+    fetch(`http://127.0.0.1:8000/note/get/${id}/`)
+      .then((res) => res.json())
+      .then((data) => {
+        setForm(data);
+
+        handleClick();
+        setId(id);
+        setUpd(true);
+      });
   }
 
   function del(id) {
@@ -35,7 +39,7 @@ function FrontPage() {
         "content-Type": "application/json",
       },
     });
-    console.log(id);
+
     window.location.reload();
   }
 
@@ -69,7 +73,14 @@ function FrontPage() {
       </div>
       <main className="main">
         {displayNote}
-        <Form visible={visible} onClick={handleClick} />
+        <Form
+          visible={visible}
+          onClick={handleClick}
+          form={form}
+          id={id}
+          upd={upd}
+          key={upd}
+        />
       </main>
     </div>
   );

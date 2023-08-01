@@ -5,6 +5,20 @@ import { json } from "react-router-dom";
 function Form(props) {
   const [title, setTitle] = React.useState("");
   const [content, setContent] = React.useState("");
+  //const [id, setId] = React.useState(props.id);
+  const [upd, setUpd] = React.useState(props.upd);
+
+  function updateForm(id, title, content) {
+    //setUpd(true);
+    fetch(`http://127.0.0.1:8000/note/update/${id}/`, {
+      method: "PUT",
+      headers: { "content-Type": "application/json" },
+      body: JSON.stringify({ title: title, content: content }),
+    });
+    // .then(() => {
+    //   setUpd(false);
+    // });
+  }
 
   function submit() {
     fetch("http://127.0.0.1:8000/note/add/", {
@@ -30,6 +44,7 @@ function Form(props) {
               type="text"
               name="title"
               id="title"
+              defaultValue={props.form.title}
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
@@ -39,6 +54,7 @@ function Form(props) {
             <textarea
               name="Note"
               id="note"
+              defaultValue={props.form.content}
               onChange={(e) => setContent(e.target.value)}
             ></textarea>
           </div>
@@ -46,8 +62,10 @@ function Form(props) {
             <input
               type="submit"
               className="submitButton"
-              value="submit"
-              onClick={submit}
+              Value="submit"
+              onClick={() =>
+                upd ? updateForm(props.id, title, content) : submit()
+              }
             />
           </div>
         </form>
